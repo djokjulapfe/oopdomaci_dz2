@@ -6,15 +6,15 @@
 
 class TreeNode {
 public:
-	TreeNode(int start, int end, const BigDecimal *val);
+	TreeNode(int start, int end, BigDecimal *val);
 
 	TreeNode(const TreeNode &treeNode);
 
 	virtual ~TreeNode();
 
-	void setLeft(TreeNode *left);
+	void setLeft(const TreeNode *left);
 
-	void setRight(TreeNode *right);
+	void setRight(const TreeNode *right);
 
 	int getStart() const;
 
@@ -25,7 +25,7 @@ public:
 private:
 	BigDecimal *val;
 	int start, end;
-	TreeNode *left, *right;
+	const TreeNode *left, *right;
 
 	friend std::ostream &operator<<(std::ostream &, const TreeNode &);
 };

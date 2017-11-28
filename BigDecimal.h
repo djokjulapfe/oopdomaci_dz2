@@ -18,13 +18,6 @@ public:
 	BigDecimal(char *num);
 
 	/**
-	 * @brief Helper constructor for easy assignment
-	 * @param whole array of numbers before the decimal point
-	 * @param fraction array of numbers before the decimal point
-	 */
-	BigDecimal(int *whole, int *fraction);
-
-	/**
 	 * @brief Standard destructor that deletes the internal char array
 	 */
 	~BigDecimal();
@@ -100,6 +93,8 @@ public:
 
 private:
 
+	BigDecimal();
+
 	/**
 	 * @brief Calculates the negative of a number
 	 * @return -this
@@ -119,58 +114,6 @@ private:
 	}
 
 	/**
-	 * @brief Safely removes zeros from start and end
-	 */
-	void remove_zeros() {
-
-		// Check if all zeros
-		bool zero = true;
-
-		// loop and find first zero if exists
-		for (int i = 0; i < m_len; ++i) {
-			if (mantis[i] != '0') {
-				zero = false;
-				break;
-			}
-		}
-		if (zero) {
-			// initialize to zero
-			delete mantis;
-			mantis = new char[1];
-			*mantis = '0';
-			exp = 0;
-			sign = 1;
-		} else {
-			// initial values
-			int rm_front = 0, rm_back = m_len - 1;
-
-			// find the first nonzero value from the left
-			for (; rm_front < m_len && mantis[rm_front] == '0'; ++rm_front)
-				exp--;
-
-			// find the first nonzero value from the right
-			for (; rm_back >= 0 && mantis[rm_back] == '0'; --rm_back);
-
-			// flip to store number of zeros from the back
-			rm_back = m_len - 1 - rm_back;
-
-			// make a new mantis with less data
-			char *new_mantis = new char[m_len + 1 - rm_back - rm_front];
-			char *it = new_mantis;
-
-			// copy the mantis to new mantis
-			for (int i = rm_front; i < m_len - rm_back; ++i) {
-				*it++ = mantis[i];
-			}
-			*it = 0;
-
-			// change the mantis
-			delete mantis;
-			mantis = new_mantis;
-		}
-	}
-
-	/**
 	 * @brief Helper function for transforming logical indices to memory
 	 * @param idx logical index
 	 * @return number at logical index
@@ -180,7 +123,7 @@ private:
 		int char_idx = exp - idx - 1;
 
 		// check if memory index exceeds string indices
-		if (char_idx < 0 || char_idx >= m_len) return 0;
+		if (char_idx < 0 || char_idx >= mantis.length()) return 0;
 		else return mantis[char_idx] - '0';
 	}
 
@@ -195,13 +138,30 @@ private:
 	 * @return logical index of the last digit
 	 */
 	int minIdx() const {
-		return exp - m_len;
+		return exp - mantis.length();
+	}
+
+	std::string toString()const {
+		std::string ret;
+		ret = sign == -1 ? "-" : "";
+		if (exp >= (int)mantis.length()) {
+			ret.append(mantis);
+			ret.append(std::string(exp - mantis.length(), '0'));
+		} else if (exp < 1){
+			ret.append("0.");
+			ret.append(std::string(-exp, '0'));
+			ret.append(mantis);
+		} else {
+			std::string t = mantis;
+			t.insert(exp, ".");
+			ret.append(t);
+		}
+		return ret;
 	}
 
 	int sign; /* Sign of the big decimal. Can take values of -1 and 1. */
 	int exp; /* Exponent of the big decimal. */
-	int m_len; /* Length (in bytes) of the mantis */
-	char *mantis; /* Mantis of the big number */
+	std::string mantis; /* Mantis of the big number */
 
 	/**
 	 * @brief function for std::ostream operator<< overloading
