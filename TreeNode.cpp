@@ -25,8 +25,8 @@ std::ostream &operator<<(std::ostream &out, const TreeNode &treeNode) {
 }
 
 TreeNode::TreeNode(int start, int end, BigDecimal *val) : start(start),
-                                                          end(end),
-                                                          val(val) {
+														  end(end),
+														  val(val) {
 	left = nullptr;
 	right = nullptr;
 }

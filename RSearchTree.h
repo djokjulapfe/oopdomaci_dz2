@@ -7,18 +7,18 @@
 
 class RSearchTree {
 public:
-	RSearchTree(std::vector<BigDecimal*> &values);
+	RSearchTree(std::vector<BigDecimal *> &values);
 
-	RSearchTree(const RSearchTree& rSearchTree);
+	RSearchTree(const RSearchTree &rSearchTree);
 
-	RSearchTree& operator=(const RSearchTree& rSearchTree);
+	RSearchTree &operator=(const RSearchTree &rSearchTree);
 
-	std::vector<TreeNode*> intervalNodes(int start, int end);
+	std::vector<TreeNode *> intervalNodes(int start, int end);
 
 	BigDecimal intervalSum(int start, int end);
 
 private:
-	TreeNode* root;
+	TreeNode *root;
 
 	friend std::ostream &operator<<(std::ostream &, const RSearchTree &);
 };
