@@ -23,7 +23,7 @@ public:
 	bool covers(int start, int end);
 
 private:
-	BigDecimal *val;
+	BigDecimal val;
 	int start, end;
 	const TreeNode *left, *right;
 

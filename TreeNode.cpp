@@ -1,5 +1,12 @@
 #include "TreeNode.h"
 
+TreeNode::TreeNode(int start, int end, BigDecimal *val) : start(start),
+														  end(end),
+														  val(*val) {
+	left = nullptr;
+	right = nullptr;
+}
+
 void TreeNode::setLeft(const TreeNode *left) {
 	TreeNode::left = left;
 }
@@ -17,18 +24,10 @@ int TreeNode::getEnd() const {
 }
 
 TreeNode::~TreeNode() {
-	delete val;
 }
 
 std::ostream &operator<<(std::ostream &out, const TreeNode &treeNode) {
 	out << treeNode.val << "[" << treeNode.start << ":" << treeNode.end << "]";
-}
-
-TreeNode::TreeNode(int start, int end, BigDecimal *val) : start(start),
-														  end(end),
-														  val(val) {
-	left = nullptr;
-	right = nullptr;
 }
 
 TreeNode::TreeNode(const TreeNode &treeNode) {
@@ -40,6 +39,6 @@ TreeNode::TreeNode(const TreeNode &treeNode) {
 }
 
 bool TreeNode::covers(int start, int end) {
-	return false;
+	return this->start <= start && this->end >= end;
 }
 
