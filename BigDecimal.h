@@ -5,20 +5,20 @@
 
 /**
  * @brief Class can store large decimal numbers.
- * TODO: override operators +, -, ==, !=, <, >, <=, >=, -, +, <<, >>, >>=
+ * TODO: standardize capitalization
  */
 
 class BigDecimal {
 
 public:
 	/**
-	 * @brief Main constructor class
+	 * @brief Main constructor
 	 * @param num a string containing a decimal number
 	 */
 	BigDecimal(const char *num);
 
 	/**
-	 * @brief Standard destructor that deletes the internal char array
+	 * @brief Standard destructor. Doesn't do anything since there is no dynamic memory
 	 */
 	~BigDecimal();
 
@@ -37,8 +37,8 @@ public:
 	BigDecimal sub(const BigDecimal *b) const;
 
 	/**
-	 * @brief Calculates the absolute value of a number
-	 * @return the absolute number
+	 * @brief Calculates the absolute value of this
+	 * @return the absolute value
 	 */
 	BigDecimal abs() const;
 
@@ -51,7 +51,7 @@ public:
 
 	/**
 	 * @brief Checks if this < b
-	 * @param b number to be checked agaianst
+	 * @param b number to be checked against
 	 * @return true iff this < b
 	 */
 	bool less(const BigDecimal *b) const;
@@ -79,7 +79,7 @@ public:
 
 	/**
 	 * @brief Shifts the number so that the decimal point gets erased
-	 * @param n the number of times the number is shifted
+	 * @param n the number of times the number is shifted (mutable)
 	 * @return the number without the decimal point
 	 */
 	BigDecimal rmd(int *n) const;
@@ -90,39 +90,115 @@ public:
 	 */
 	BigDecimal(const BigDecimal &bigDecimal);
 
+	/**
+	 * @brief standard assignment constructor (copies data)
+	 * @param bigDecimal value to be assigned
+	 * @return *this
+	 */
 	const BigDecimal operator=(const BigDecimal &bigDecimal);
 
+	/**
+	 * @brief calculates the sum of two values
+	 * @param bigDecimal value to be summed with
+	 * @return the sum of two values
+	 */
 	const BigDecimal operator+(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief calculates the absolute value of a number
+	 * @return the absolute value of the number
+	 */
 	const BigDecimal operator+() const;
 
+	/**
+	 * @brief increments by a value
+	 * @param bigDecimal value to be incremented by
+	 * @return *this
+	 */
 	const BigDecimal operator+=(const BigDecimal &bigDecimal);
 
+	/**
+	 * @brief calculates the difference of two values
+	 * @param bigDecimal the value to be decreased by
+	 * @return the difference this - bigDecimal
+	 */
 	const BigDecimal operator-(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief calculates the negative value of a number
+	 * @return the negative value of a number
+	 */
 	const BigDecimal operator-() const;
 
+	/**
+	 * @brief decrements by a value
+	 * @param bigDecimal value to be decremented by
+	 * @return *this
+	 */
 	const BigDecimal operator-=(const BigDecimal &bigDecimal);
 
+	/**
+	 * @brief checks whether two values are equal
+	 * @param bigDecimal the value to be checked against
+	 * @return true iff this == bigDecimal
+	 */
 	bool operator==(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief checks whether this is greater than a value
+	 * @param bigDecimal the value to be checked against
+	 * @return true iff this > bigDecimal
+	 */
 	bool operator>(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief checks whether this is greater than or equal to a value
+	 * @param bigDecimal the value to be checked against
+	 * @return true iff this >= bigDecimal
+	 */
 	bool operator>=(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief checks whether this is smaller than a value
+	 * @param bigDecimal the value to be checked against
+	 * @return true iff this < bigDecimal
+	 */
 	bool operator<(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief checks whether this is smaller than or equal to a value
+	 * @param bigDecimal the value to be checked against
+	 * @return true iff this <= bigDecimal
+	 */
 	bool operator<=(const BigDecimal &bigDecimal) const;
 
+	/**
+	 * @brief Shifts the number left n times
+	 * @param n number of times to be shifted left
+	 * @return the number shifted n times to the left
+	 */
 	const BigDecimal operator<<(const int &n) const;
 
+	/**
+	 * @brief Shifts the number right n times
+	 * @param n number of times to be shifted right
+	 * @return the number shifted n times to the right
+	 */
 	const BigDecimal operator>>(const int &n) const;
 
+	/**
+	 * @brief Shifts the number so that the decimal point gets erased
+	 * @param n the number of times the number is shifted (mutable)
+	 * @return the number without the decimal point
+	 */
 	const BigDecimal operator>>=(int *n) const;
 
-	BigDecimal();
-
 private:
+
+	/**
+	 * @brief default constructor for internal use
+	 */
+	BigDecimal();
 
 	/**
 	 * @brief Calculates the negative of a number
@@ -158,6 +234,11 @@ private:
 		return exp - mantis.length();
 	}
 
+	/**
+	 * @brief converts a BigDecimal to std::string
+	 * @return value of the BigDecimal as a string
+	 * TODO: comment function
+	 */
 	std::string toString() const {
 		std::string ret;
 		ret = sign == -1 ? "-" : "";
@@ -176,9 +257,14 @@ private:
 		return ret;
 	}
 
-	int sign; /* Sign of the big decimal. Can take values of -1 and 1. */
-	long exp; /* Exponent of the big decimal. */
-	std::string mantis; /* Mantis of the big number */
+	// Sign of the big decimal. Can take values of -1 and 1.
+	int sign;
+
+	// Exponent of the big decimal.
+	long exp;
+
+	// Mantis of the big number
+	std::string mantis;
 
 	/**
 	 * @brief function for std::ostream operator<< overloading

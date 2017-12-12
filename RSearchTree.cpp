@@ -133,10 +133,6 @@ void RSearchTree::free_tree() {
 	}
 }
 
-RSearchTree &RSearchTree::operator=(RSearchTree &&rSearchTree) {
-	return *this;
-}
-
 RSearchTree::StackElement::StackElement(TreeNode *parent, bool side, int start, int end) : parent(parent),
 																						   start(start),
 																						   end(end), side(side) {

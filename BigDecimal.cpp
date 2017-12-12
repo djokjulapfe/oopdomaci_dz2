@@ -4,6 +4,8 @@
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
+// TODO: comment functions
+
 BigDecimal::BigDecimal(const char *num) : mantis(num), sign(1) {
 
 	// check sign

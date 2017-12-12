@@ -30,7 +30,7 @@ std::ostream &operator<<(std::ostream &out, const TreeNode &treeNode) {
 	out << treeNode.val << "[" << treeNode.start << ":" << treeNode.end << "]";
 }
 
-TreeNode::TreeNode(const TreeNode &treeNode) {
+TreeNode::TreeNode(const TreeNode &treeNode) : val(treeNode.val) {
 	start = treeNode.start;
 	end = treeNode.end;
 	val = treeNode.val;
