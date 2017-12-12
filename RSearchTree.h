@@ -19,11 +19,16 @@ public:
 
 	RSearchTree &operator=(const RSearchTree &rSearchTree);
 
+	RSearchTree &operator=(RSearchTree &&rSearchTree);
+
 	std::vector<TreeNode *> intervalNodes(int start, int end);
 
 	BigDecimal intervalSum(int start, int end);
 
 private:
+
+	void free_tree();
+
 	TreeNode *root;
 
 	friend std::ostream &operator<<(std::ostream &, const RSearchTree &);

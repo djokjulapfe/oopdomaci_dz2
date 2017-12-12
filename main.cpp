@@ -43,6 +43,10 @@ int main() {
 //
 //	RSearchTree rSearchTree2(*rSearchTree1);
 //
+//	for (int i = 0; i < t.size(); ++i) {
+//		delete t[i];
+//	}
+//
 //	t.clear();
 //	t.push_back(new BigDecimal("11"));
 //	t.push_back(new BigDecimal("9"));
@@ -57,13 +61,19 @@ int main() {
 //
 //	std::cout << *rSearchTree1 << std::endl;
 //	std::cout << rSearchTree2 << std::endl;
+//
+//	for (int i = 0; i < t.size(); ++i) {
+//		delete t[i];
+//	}
 
-	for (int k = 0; k < 100; ++k) {
+	for (int k = 0; k < 100 ; ++k) {
 		std::vector<BigDecimal*> v;
 		for (int i = 0; i < 100; ++i) {
 			v.push_back(new BigDecimal("3.14"));
 		}
 		RSearchTree x(v);
+		RSearchTree y(v);
+		y = x;
 		for (int i = 0; i < 100; ++i) {
 			delete v[i];
 		}

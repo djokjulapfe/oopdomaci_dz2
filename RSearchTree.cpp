@@ -28,56 +28,50 @@ RSearchTree::RSearchTree(std::vector<BigDecimal *> &values) {
 			stack.push_back(StackElement(tNode, RIGHT, currSE.start + len / 2 + 1, currSE.end));
 			stack.push_back(StackElement(tNode, LEFT, currSE.start, currSE.start + len / 2));
 		}
+		delete sum;
 	}
 }
 
 RSearchTree::~RSearchTree() {
-	std::vector<TreeNode *> stack;
-	stack.push_back(root);
-	while (!stack.empty()) {
-		TreeNode * tNode = stack.back();
-		stack.pop_back();
-		if (tNode != nullptr) {
-			stack.push_back(tNode->getRight());
-			stack.push_back(tNode->getLeft());
-		}
-		delete tNode;
-	}
+	free_tree();
 }
 
 RSearchTree::RSearchTree(const RSearchTree &rSearchTree) {
-	std::vector<RSearchTree::StackElement> stack;
-	root = new TreeNode(*rSearchTree.root);
-	if (root->getRight() != nullptr) {
-		root->setRight(new TreeNode(*root->getRight()));
-		stack.push_back(RSearchTree::StackElement(root->getRight(), RIGHT, root->getRight()->getStart(),
-												  root->getRight()->getEnd()));
-	}
-	if (root->getLeft() != nullptr) {
-		root->setLeft(new TreeNode(*root->getLeft()));
-		stack.push_back(RSearchTree::StackElement(root->getLeft(), LEFT, root->getLeft()->getStart(),
-												  root->getLeft()->getEnd()));
-	}
-	while (!stack.empty()) {
-		RSearchTree::StackElement currSE = stack.back();
-		stack.pop_back();
-		if (currSE.parent->getRight() != nullptr) {
-			currSE.parent->setRight(new TreeNode(*currSE.parent->getRight()));
-			stack.push_back(RSearchTree::StackElement(currSE.parent->getRight(), RIGHT,
-													  currSE.parent->getRight()->getStart(),
-													  currSE.parent->getRight()->getEnd()));
-		}
-		if (currSE.parent->getLeft() != nullptr) {
-			currSE.parent->setLeft(new TreeNode(*currSE.parent->getLeft()));
-			stack.push_back(RSearchTree::StackElement(currSE.parent->getLeft(), LEFT,
-													  currSE.parent->getLeft()->getStart(),
-													  currSE.parent->getLeft()->getEnd()));
-		}
-	}
+	*this = rSearchTree;
 }
 
 RSearchTree &RSearchTree::operator=(const RSearchTree &rSearchTree) {
-	*this = rSearchTree;
+	if (this != &rSearchTree) {
+		free_tree();
+		std::vector<RSearchTree::StackElement> stack;
+		root = new TreeNode(*rSearchTree.root);
+		if (root->getRight() != nullptr) {
+			root->setRight(new TreeNode(*root->getRight()));
+			stack.push_back(RSearchTree::StackElement(root->getRight(), RIGHT, root->getRight()->getStart(),
+													  root->getRight()->getEnd()));
+		}
+		if (root->getLeft() != nullptr) {
+			root->setLeft(new TreeNode(*root->getLeft()));
+			stack.push_back(RSearchTree::StackElement(root->getLeft(), LEFT, root->getLeft()->getStart(),
+													  root->getLeft()->getEnd()));
+		}
+		while (!stack.empty()) {
+			RSearchTree::StackElement currSE = stack.back();
+			stack.pop_back();
+			if (currSE.parent->getRight() != nullptr) {
+				currSE.parent->setRight(new TreeNode(*currSE.parent->getRight()));
+				stack.push_back(RSearchTree::StackElement(currSE.parent->getRight(), RIGHT,
+														  currSE.parent->getRight()->getStart(),
+														  currSE.parent->getRight()->getEnd()));
+			}
+			if (currSE.parent->getLeft() != nullptr) {
+				currSE.parent->setLeft(new TreeNode(*currSE.parent->getLeft()));
+				stack.push_back(RSearchTree::StackElement(currSE.parent->getLeft(), LEFT,
+														  currSE.parent->getLeft()->getStart(),
+														  currSE.parent->getLeft()->getEnd()));
+			}
+		}
+	}
 	return *this;
 }
 
@@ -102,6 +96,24 @@ std::ostream &operator<<(std::ostream &out, const RSearchTree &rSearchTree) {
 		out << *currSE.parent << ',';
 	}
 	return out;
+}
+
+void RSearchTree::free_tree() {
+	std::vector<TreeNode *> stack;
+	stack.push_back(root);
+	while (!stack.empty()) {
+		TreeNode *tNode = stack.back();
+		stack.pop_back();
+		if (tNode != nullptr) {
+			stack.push_back(tNode->getRight());
+			stack.push_back(tNode->getLeft());
+		}
+		delete tNode;
+	}
+}
+
+RSearchTree &RSearchTree::operator=(RSearchTree &&rSearchTree) {
+	return *this;
 }
 
 RSearchTree::StackElement::StackElement(TreeNode *parent, bool side, int start, int end) : parent(parent),
