@@ -34,8 +34,8 @@ TreeNode::TreeNode(const TreeNode &treeNode) {
 	start = treeNode.start;
 	end = treeNode.end;
 	val = treeNode.val;
-	left = nullptr;
-	right = nullptr;
+	left = treeNode.left;
+	right = treeNode.right;
 }
 
 bool TreeNode::covers(int start, int end) {

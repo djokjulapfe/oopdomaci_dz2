@@ -13,6 +13,8 @@ class RSearchTree {
 public:
 	RSearchTree(std::vector<BigDecimal *> &values);
 
+	~RSearchTree();
+
 	RSearchTree(const RSearchTree &rSearchTree);
 
 	RSearchTree &operator=(const RSearchTree &rSearchTree);
