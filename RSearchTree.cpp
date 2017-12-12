@@ -75,12 +75,33 @@ RSearchTree &RSearchTree::operator=(const RSearchTree &rSearchTree) {
 	return *this;
 }
 
-std::vector<TreeNode *> RSearchTree::intervalNodes(int start, int end) {
-	return std::vector<TreeNode *>();
+std::vector<TreeNode *> RSearchTree::intervalNodes(int start, int end) const {
+	std::vector<TreeNode *> stack, ret;
+	stack.push_back(root);
+	while (!stack.empty()) {
+		TreeNode *tNode = stack.back();
+		stack.pop_back();
+		if (tNode->covers(start, end)) {
+			ret.push_back(tNode);
+		} else {
+			if (tNode->getRight() != nullptr) {
+				stack.push_back(tNode->getRight());
+			}
+			if (tNode->getLeft() != nullptr) {
+				stack.push_back(tNode->getLeft());
+			}
+		}
+	}
+	return ret;
 }
 
-BigDecimal RSearchTree::intervalSum(int start, int end) {
-	return BigDecimal(nullptr);
+BigDecimal RSearchTree::intervalSum(int start, int end) const {
+	auto arr = intervalNodes(start, end);
+	BigDecimal sum("0");
+	for (auto &item : arr) {
+		sum += item->getVal();
+	}
+	return sum;
 }
 
 std::ostream &operator<<(std::ostream &out, const RSearchTree &rSearchTree) {

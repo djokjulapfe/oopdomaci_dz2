@@ -21,9 +21,9 @@ public:
 
 	RSearchTree &operator=(RSearchTree &&rSearchTree);
 
-	std::vector<TreeNode *> intervalNodes(int start, int end);
+	std::vector<TreeNode *> intervalNodes(int start, int end) const;
 
-	BigDecimal intervalSum(int start, int end);
+	BigDecimal intervalSum(int start, int end) const;
 
 private:
 

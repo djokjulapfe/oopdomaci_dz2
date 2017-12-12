@@ -26,6 +26,8 @@ public:
 
 	bool covers(int start, int end);
 
+	const BigDecimal &getVal() const;
+
 private:
 	BigDecimal val;
 	int start, end;

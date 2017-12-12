@@ -39,7 +39,7 @@ TreeNode::TreeNode(const TreeNode &treeNode) {
 }
 
 bool TreeNode::covers(int start, int end) {
-	return this->start <= start && this->end >= end;
+	return this->start >= start && this->end <= end;
 }
 
 TreeNode *TreeNode::getLeft() const {
@@ -48,5 +48,9 @@ TreeNode *TreeNode::getLeft() const {
 
 TreeNode *TreeNode::getRight() const {
 	return right;
+}
+
+const BigDecimal &TreeNode::getVal() const {
+	return val;
 }
 

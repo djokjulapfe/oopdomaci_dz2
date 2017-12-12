@@ -66,17 +66,35 @@ int main() {
 //		delete t[i];
 //	}
 
-	for (int k = 0; k < 100 ; ++k) {
-		std::vector<BigDecimal*> v;
-		for (int i = 0; i < 100; ++i) {
-			v.push_back(new BigDecimal("3.14"));
-		}
-		RSearchTree x(v);
-		RSearchTree y(v);
-		y = x;
-		for (int i = 0; i < 100; ++i) {
-			delete v[i];
-		}
+//	for (int k = 0; k < 100 ; ++k) {
+//		std::vector<BigDecimal*> v;
+//		for (int i = 0; i < 100; ++i) {
+//			v.push_back(new BigDecimal("3.14"));
+//		}
+//		RSearchTree x(v);
+//		RSearchTree y(v);
+//		y = x;
+//		for (int i = 0; i < 100; ++i) {
+//			delete v[i];
+//		}
+//	}
+
+
+	std::vector<BigDecimal *> t;
+	t.push_back(new BigDecimal("1"));
+	t.push_back(new BigDecimal("3"));
+	t.push_back(new BigDecimal("5"));
+	t.push_back(new BigDecimal("7"));
+	t.push_back(new BigDecimal("9"));
+	t.push_back(new BigDecimal("11"));
+	RSearchTree rSearchTree(t);
+
+	auto arr = rSearchTree.intervalSum(2, 4);
+
+	std::cout << arr << std::endl;
+
+	for (int i = 0; i < t.size(); ++i) {
+		delete t[i];
 	}
 
 	return 0;
