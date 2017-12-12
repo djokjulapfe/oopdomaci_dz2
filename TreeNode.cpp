@@ -7,11 +7,11 @@ TreeNode::TreeNode(int start, int end, BigDecimal *val) : start(start),
 	right = nullptr;
 }
 
-void TreeNode::setLeft(const TreeNode *left) {
+void TreeNode::setLeft(TreeNode *left) {
 	TreeNode::left = left;
 }
 
-void TreeNode::setRight(const TreeNode *right) {
+void TreeNode::setRight(TreeNode *right) {
 	TreeNode::right = right;
 }
 
@@ -40,5 +40,13 @@ TreeNode::TreeNode(const TreeNode &treeNode) {
 
 bool TreeNode::covers(int start, int end) {
 	return this->start <= start && this->end >= end;
+}
+
+TreeNode *TreeNode::getLeft() const {
+	return left;
+}
+
+TreeNode *TreeNode::getRight() const {
+	return right;
 }
 

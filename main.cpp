@@ -28,8 +28,19 @@ int main() {
 //	x += y;
 //	std::cout << x << std::endl;
 
-	TreeNode treeNode(0, 10, new BigDecimal("36"));
-	std::cout << treeNode.covers(3, 100) << std::endl;
+//	TreeNode treeNode(0, 10, new BigDecimal("36"));
+//	std::cout << treeNode.covers(3, 100) << std::endl;
+
+	std::vector<BigDecimal *> t;
+	t.push_back(new BigDecimal("1"));
+	t.push_back(new BigDecimal("3"));
+	t.push_back(new BigDecimal("5"));
+	t.push_back(new BigDecimal("7"));
+	t.push_back(new BigDecimal("9"));
+	t.push_back(new BigDecimal("11"));
+	RSearchTree rSearchTree(t);
+
+	std::cout << rSearchTree;
 
 	return 0;
 }

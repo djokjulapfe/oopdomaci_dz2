@@ -12,9 +12,13 @@ public:
 
 	virtual ~TreeNode();
 
-	void setLeft(const TreeNode *left);
+	void setLeft(TreeNode *left);
 
-	void setRight(const TreeNode *right);
+	void setRight(TreeNode *right);
+
+	TreeNode *getLeft() const;
+
+	TreeNode *getRight() const;
 
 	int getStart() const;
 
@@ -25,7 +29,7 @@ public:
 private:
 	BigDecimal val;
 	int start, end;
-	const TreeNode *left, *right;
+	TreeNode *left, *right;
 
 	friend std::ostream &operator<<(std::ostream &, const TreeNode &);
 };
